@@ -11,6 +11,7 @@ VENUE_CHOICES = (
     ("ADVANCED", "ADVANCED"),
 )
 class Venue(models.Model):
+    name = models.CharField(max_length=300, blank=True, null=True)
     category = models.CharField(max_length = 20,choices = VENUE_CHOICES, default = 'REGULAR')   
     number_of_seats =  models.PositiveIntegerField()
 
