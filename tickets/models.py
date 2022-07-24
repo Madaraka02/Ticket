@@ -3,6 +3,15 @@ from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
+class Venue(models.Model):
+    name = models.CharField(max_length=300, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
+
+
 VENUE_CHOICES = (
     ("VVIP", "VVIP"),
     ("VIP", "VIP"),
@@ -10,13 +19,14 @@ VENUE_CHOICES = (
     ("KIDS", "KIDS"),
     ("ADVANCED", "ADVANCED"),
 )
-class Venue(models.Model):
+class Slot(models.Model):
     name = models.CharField(max_length=300, blank=True, null=True)
+    venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
     category = models.CharField(max_length = 20,choices = VENUE_CHOICES, default = 'REGULAR')   
     number_of_seats =  models.PositiveIntegerField()
 
     def __str__(self):
-        return f"{self.category} has {self.number_of_seats} seats"
+        return f"{self.name} {self.category} has {self.number_of_seats} seats"
 
 
 
@@ -29,7 +39,7 @@ class Event(models.Model):
     banner = models.FileField(upload_to="events/banners", null=True, blank=True)
     date = models.DateTimeField(null=True, blank=True)
     closed = models.BooleanField(default=False)
-    venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
+    available_slots = models.ManyToManyField(Slot,blank=True)
 
     def __str__(self):
         return self.title
