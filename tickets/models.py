@@ -20,7 +20,7 @@ VENUE_CHOICES = (
     ("ADVANCED", "ADVANCED"),
 )
 class Slot(models.Model):
-    name = models.CharField(max_length=300, blank=True, null=True)
+    # name = models.CharField(max_length=300, blank=True, null=True)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
     category = models.CharField(max_length = 20,choices = VENUE_CHOICES, default = 'REGULAR')   
     number_of_seats =  models.PositiveIntegerField()
