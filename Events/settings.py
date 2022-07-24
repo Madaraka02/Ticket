@@ -54,6 +54,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Events.urls'
+AUTH_USER_MODEL = "users.User"
 
 TEMPLATES = [
     {
