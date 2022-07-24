@@ -1,0 +1,61 @@
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Newberry Institute|Login</title>
+        <!-- Bootstrap CSS -->
+        <!-- Font Awesome -->
+        <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        rel="stylesheet"
+        />
+        <!-- Google Fonts -->
+        <link
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+        rel="stylesheet"
+        />
+        <!-- MDB -->
+        <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.2.0/mdb.min.css"
+        rel="stylesheet"
+        />
+</head>
+<body>
+    <div class="container mt-4 mb-4">
+        <div class="row mt-4 mb-4">
+            <div class="col-md-3 mt-4 mb-4"></div>
+            <div class="col-md-6 mt-4 mb-4 shadow-lg p-3">
+                {% if request.user.is_authenticated %}
+                <p class="text-center">Already logged in <span>
+                    <a href="">Go back</a>
+                </span></p>
+                {% else %}
+                <p class="text-center">Login</p>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{form|crispy}}
+                    <button type="submit" class="btn btn-outline-primary btn-lg mt-2">  Login</button>
+                    <p class="mt-2 mb-2"><a href="{% url 'password_reset' %}">Reset Password</a></p>
+                </form>
+          
+                {% endif %}
+            </div>
+            <div class="col-md-3 mt-4 mb-4"></div>
+
+        </div>
+    </div>
+
+
+
+        <!-- MDB -->
+<script
+type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.2.0/mdb.min.js"
+></script>    
+<!-- kdb 716 A --
+</body>
+</html>
