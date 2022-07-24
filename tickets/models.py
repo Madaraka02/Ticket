@@ -26,7 +26,7 @@ class Slot(models.Model):
     number_of_seats =  models.PositiveIntegerField()
 
     def __str__(self):
-        return f"{self.name} {self.category} has {self.number_of_seats} seats"
+        return f"{self.category} has {self.number_of_seats} seats"
 
 
 
@@ -68,7 +68,7 @@ class Reservation(models.Model):
     phone_number = PhoneNumberField()
 
     def __str__(self):
-        return f"{self.email} bought {ticket.ticket_type} ticket for {ticket.event.title}"
+        return f"{self.email} bought {self.ticket.ticket_type} ticket for {self.ticket.event.title}"
 
 
     
