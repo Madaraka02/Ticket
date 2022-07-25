@@ -31,7 +31,7 @@
             <div class="col-md-6 mt-4 mb-4 shadow-lg p-3">
                 {% if request.user.is_authenticated %}
                 <p class="text-center">Already logged in <span>
-                    <a href="">Go back</a>
+                    <a href="{% url 'home' %}">Go back</a>
                 </span></p>
                 {% else %}
                 <p class="text-center">Login</p>

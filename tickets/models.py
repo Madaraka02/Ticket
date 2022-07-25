@@ -14,22 +14,19 @@ class Venue(models.Model):
 
 
 
+class PaymentCategories(models.Model):
+    name = models.CharField(max_length=300, blank=True, null=True)
 
-VENUE_CHOICES = (
-    ("VVIP", "VVIP"),
-    ("VIP", "VIP"),
-    ("REGULAR", "REGULAR"),
-    ("KIDS", "KIDS"),
-    ("ADVANCED", "ADVANCED"),
-)
+    def __str__(self):
+        return self.name
+
 class Slot(models.Model):
-    # name = models.CharField(max_length=300, blank=True, null=True)
-    venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
-    category = models.CharField(max_length = 20,choices = VENUE_CHOICES, default = 'REGULAR')   
+    theatre = models.CharField(max_length=300, blank=True, null=True)
+    category = models.ForeignKey(PaymentCategories, on_delete=models.CASCADE, null=True) 
     number_of_seats =  models.PositiveIntegerField()
 
     def __str__(self):
-        return f"{self.category} has {self.number_of_seats} seats"
+        return self.theatre
 
 
 
@@ -41,8 +38,9 @@ class Event(models.Model):
     description = models.TextField(blank=True, null=True)
     banner = models.FileField(upload_to="events/banners", null=True, blank=True)
     date = models.DateTimeField(null=True, blank=True)
+    starting_from = models.TimeField(null=True, blank=True)
     closed = models.BooleanField(default=False)
-    available_slots = models.ManyToManyField(Slot,blank=True)
+    available_slots = models.ManyToManyField(Slot, blank=True)
 
     def __str__(self):
         return self.title
@@ -55,10 +53,11 @@ TICKET_CHOICES = (
     ("ADVANCED", "ADVANCED"),
 )
 class Ticket(models.Model):
-    ticket_type = models.CharField(max_length = 20,choices = TICKET_CHOICES, default = 'REGULAR')    
+    # ticket_type = models.CharField(max_length = 20,choices = TICKET_CHOICES, default = 'REGULAR')    
     event = models.ForeignKey(Event, on_delete=models.CASCADE)   
+    category = models.ForeignKey(PaymentCategories, on_delete=models.CASCADE, null=True) 
     price = models.PositiveIntegerField()
-    paid = models.BooleanField(default=False)
+    # paid = models.BooleanField(default=False)
 
 
     def __str__(self):
