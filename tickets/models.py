@@ -100,11 +100,3 @@ def create_eticket(sender, instance, created, **kwargs):
 def save_eticket(sender, instance, **kwargs):
     instance.eticket.save()
 
-# @receiver(post_save, sender=User)
-# def create_eticket(sender, instance, created, **kwargs):
-#     if created:
-#         Profile.objects.create(user=instance)
-  
-# @receiver(post_save, sender=User)
-# def save_eticket(sender, instance, **kwargs):
-#         instance.profile.save()        
