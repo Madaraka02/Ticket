@@ -18,6 +18,7 @@ class Venue(models.Model):
 
 
 class PaymentCategories(models.Model):
+    company = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=300, blank=True, null=True)
 
     def __str__(self):
@@ -29,6 +30,12 @@ class Slot(models.Model):
     number_of_seats =  models.PositiveIntegerField()
     from_seat_number = models.PositiveIntegerField(null=True, blank=True)
     to_seat_number = models.PositiveIntegerField(null=True, blank=True)
+
+    
+    @property
+    def seats(self):
+        available_seats = [seat for seat in range((self.from_seat_number), (self.to_seat_number +1))]
+        return available_seats
 
 
 
@@ -91,10 +98,13 @@ class Eticket(models.Model):
         return f"{self.reservation.names} {self.seat_no} {self.ticket_class}"
 
 
+
 @receiver(post_save, sender=Reservation)
 def create_eticket(sender, instance, created, **kwargs):
     if created:
-        Eticket.objects.create(reservation=instance,ticket_class=str(instance.ticket.category))
+        slots = [slot for slot in instance.ticket.event.available_slots.all() if slot.category == instance.ticket.category]
+        Eticket.objects.create(reservation=instance,ticket_class=str(instance.ticket.category),
+        seat_no=[i.seats[i] for i in slots][0])
 
 @receiver(post_save, sender=Reservation)
 def save_eticket(sender, instance, **kwargs):
