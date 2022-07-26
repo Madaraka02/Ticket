@@ -2,7 +2,8 @@ from django.db import models
 # from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 from inclusive_django_range_fields import InclusiveIntegerRangeField
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.contrib.auth import get_user_model
 
 User=get_user_model()
@@ -63,7 +64,6 @@ class Ticket(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)   
     category = models.ForeignKey(PaymentCategories, on_delete=models.CASCADE, null=True) 
     price = models.PositiveIntegerField()
-    # paid = models.BooleanField(default=False)
 
 
     def __str__(self):
@@ -74,9 +74,37 @@ class Reservation(models.Model):
     names = models.CharField(max_length=500, blank=True, null=True)
     email = models.EmailField(max_length=500, blank=True, null=True)
     phone_number = PhoneNumberField()
+    paid = models.BooleanField(default=False)
+
 
     def __str__(self):
-        return f"{self.email} bought {self.ticket.category} ticket for {self.ticket.event.title}"
+        return self.email
 
 
     
+class Eticket(models.Model):
+    reservation = models.OneToOneField(Reservation, on_delete=models.CASCADE) 
+    seat_no = models.CharField(max_length=20, null=True, blank=True) 
+    ticket_class = models.CharField(max_length=20, null=True, blank=True)  
+
+    def __str__(self):
+        return f"{self.reservation.names} {self.seat_no} {self.ticket_class}"
+
+
+@receiver(post_save, sender=Reservation)
+def create_eticket(sender, instance, created, **kwargs):
+    if created:
+        Eticket.objects.create(reservation=instance,ticket_class=str(instance.ticket.category))
+
+@receiver(post_save, sender=Reservation)
+def save_eticket(sender, instance, **kwargs):
+    instance.eticket.save()
+
+# @receiver(post_save, sender=User)
+# def create_eticket(sender, instance, created, **kwargs):
+#     if created:
+#         Profile.objects.create(user=instance)
+  
+# @receiver(post_save, sender=User)
+# def save_eticket(sender, instance, **kwargs):
+#         instance.profile.save()        
