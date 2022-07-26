@@ -14,6 +14,7 @@ def index(request):
 def eventDetail(request, id):
     event = get_object_or_404( Event, id=id)
     tickets = Ticket.objects.filter(event=event)
+    
 
     context = {
         'event':event,
@@ -21,6 +22,35 @@ def eventDetail(request, id):
     }
     return render(request, 'tickets/eventDetails.html', context)
 
+def ticketDetail(request, id):
+    ticket = get_object_or_404( Ticket, id=id)
+
+    reservations = Reservation.objects.filter(ticket=ticket).count()
+    name = PaymentCategories.objects.get(name=ticket.category)
+
+    all_slots = []
+
+    for slot in ticket.event.available_slots.all():
+        if slot.category.name == ticket.category:
+            slotss = slot.number_of_seats
+            all_slots.append(slotss)
+    
+    form = ReservationForm()
+    if request.method == 'POST':  
+        form = ReservationForm(request.POST, request.FILES)
+        if form.is_valid():
+            reservation = form.save(commit=False)
+            reservation.ticket = ticket
+            reservation.save()
+            return redirect('ticket_details',  id=ticket.id)
+
+    context = {
+        'ticket':ticket,
+        'form':form,
+        'reservations':reservations,
+        'all_slots':all_slots
+    }
+    return render(request, 'tickets/ticketDetails.html', context)
 
 def home(request):
     form = PaymentCategoriesForm()

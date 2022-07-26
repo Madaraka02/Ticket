@@ -1,4 +1,6 @@
 {% load crispy_forms_tags %}
+{% load mathfilters %}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,11 +29,11 @@
 <body>
     <div class="container mt-4 mb-4 align-items-center justify-content-center">
         <div class="row mt-4 mb-4">
-            <div class="col-md-4 mt-4 mb-4 p-3">
+            <div class="col-md-4 mt-2 mb-4 p-3">
                 <p class="text-center"></p>
 
             </div>
-            <div class="col-md-4 mt-4 mb-4 p-3">
+            <div class="col-md-6 mt-4 mb-4 p-3">
                 <p class="text-center"></p>
                 {% if event %}
                 <div class="card mt-2 mb-2">
@@ -40,12 +42,23 @@
                         <h5 class="card-tittle">{{event.title}}</h5>
                         <p class="card-text">By {{ event.owner }} </p>
                         <p class="card-text"> {{ event.description }} </p>
-                        <p class="card-text">Date: {{ event.date }} Starting time: {{ event.starting_from }} </p>
-                        <p class="card-text"> {{ event.description }} </p>
+                        <p class="card-text">Date: {{ event.date|date:"Y M d" }} </p>
+                        <p class="card-text">Starting time: {{ event.starting_from }} </p>
+                        <!-- {% for slot in event.available_slots.all %}
+                        <span class="badge badge-success">{{ slot.category.name }} {{ slot.number_of_seats }} </span>
+
+                        {% endfor %} -->
 
                     {% for ticket in tickets %}
-                                <a href="{% url 'index' %}">
-                                    <span class="badge badge-success">{{ ticket.category }} {{ ticket.price }}</span>
+                                <a href="{% url 'ticket_details' ticket.id %}">
+                                    <span class="badge badge-success">{{ ticket.category }} <strong style="color: brown; font-size: small; font-weight: 800;">ksh: {{ ticket.price }} </strong>
+                                        {% for slot in ticket.event.available_slots.all %}
+                                        {% if slot.category == ticket.category %}
+
+                                        {{ slot.number_of_seats }} seats
+                                        {% endif %}
+                                        {% endfor %}
+                    </span>
                                 </a>
                     {% endfor %}
                 </div>

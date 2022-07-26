@@ -41,6 +41,10 @@
                                 <p class="card-text"> {{ event.owner }} </p>
                                 <a href="{% url 'event_details' event.id %}" class="card-text"> {{ event.title }} </a>
                                 <p class="card-text"> {{ event.date }} </p>
+                                <!-- {% for slot in event.available_slots.all %}
+                                <span class="badge badge-success">{{ slot.category.name }} {{ slot.number_of_seats }} </span>
+
+                                {% endfor %} -->
                             </div>
                         </div>
                     {% endfor %}

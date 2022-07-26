@@ -1,0 +1,94 @@
+{% load crispy_forms_tags %}
+{% load mathfilters %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+        <!-- Bootstrap CSS -->
+        <!-- Font Awesome -->
+        <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        rel="stylesheet"
+        />
+        <!-- Google Fonts -->
+        <link
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+        rel="stylesheet"
+        />
+        <!-- MDB -->
+        <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.2.0/mdb.min.css"
+        rel="stylesheet"
+        />
+</head>
+<body>
+    <div class="container mt-4 mb-4 align-items-center justify-content-center">
+        <div class="row mt-4 mb-4">
+            <div class="col-md-4 mt-4 mb-4 p-3">
+                <p class="text-center"></p>
+
+            </div>
+            <div class="col-md-4 mt-4 mb-4 p-3">
+                <p class="text-center"></p>
+                {% if ticket %}
+                <div class="card mt-2 mb-2">
+                    <div class="card-body">
+<!-- available_slots -->
+                        <h5 class="card-tittle">Book {{ ticket.category }} ticket for {{ticket.event}}</h5>
+                        <p class="card-text">Amount {{ ticket.price }} </p>
+                        <p class="card-text">
+                            {% for slot in ticket.event.available_slots.all %}
+                            {% if slot.category == ticket.category %}
+                            {% if reservations == slot.number_of_seats%}
+                            <del>
+                            <span class="badge bg-danger" style="font-size: larger; font-weight: 800;">SOLD OUT</span>
+                            </del>
+                            {% else %}
+                            Booked:
+
+                            <span class="badge bg-danger" style="font-size: medium; font-weight: bold;">{{reservations}}</span>
+                            out of 
+                            <span class="badge bg-success" style="font-size: medium; font-weight: bold;">{{ slot.number_of_seats  }}</span>
+
+                            {% endif %}
+                            {% endif %}
+                            {% endfor %}
+                        </p>
+                            <!-- {{ slot.number_of_seats  }} |sub:{{ reservations }} -->
+                            
+                        </p>
+
+
+                </div>
+            </div>
+                {% endif %}
+            </div>
+            <div class="col-md-4 mt-4 mb-4p-3">
+                <p class="text-center">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{form|crispy}}
+                        <button type="submit" class="btn btn-outline-primary btn-lg mt-2">  Book Ticket</button>
+                    </form>
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+
+
+<!-- MDB -->
+
+<script
+type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.2.0/mdb.min.js"
+></script>    
+<!-- kdb 716 A --
+</body>
+</html>

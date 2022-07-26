@@ -44,7 +44,7 @@ class TicketForm(ModelForm):
         model = Ticket
         fields = '__all__'       
 
-class ReservationForm:
+class ReservationForm(ModelForm):
     # to include Ticket
     class Meta:
         model = Reservation

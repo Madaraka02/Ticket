@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'users',
     'tickets',
     'crispy_forms',
+    'mathfilters',
 
 ]
 
