@@ -4,6 +4,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from inclusive_django_range_fields import InclusiveIntegerRangeField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
 from django.contrib.auth import get_user_model
 
 User=get_user_model()
@@ -30,6 +31,8 @@ class Slot(models.Model):
     number_of_seats =  models.PositiveIntegerField()
     from_seat_number = models.PositiveIntegerField(null=True, blank=True)
     to_seat_number = models.PositiveIntegerField(null=True, blank=True)
+    company = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+
 
     
     @property
@@ -74,7 +77,7 @@ class Ticket(models.Model):
 
 
     def __str__(self):
-        return f"{self.ticket_type} going for {self.price}"
+        return f"{self.category.name} going for {self.price}"
 
 class Reservation(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)   
@@ -85,7 +88,7 @@ class Reservation(models.Model):
 
 
     def __str__(self):
-        return self.email
+        return f"{self.email} reserved {self.ticket.category}"
 
 
     
@@ -97,14 +100,24 @@ class Eticket(models.Model):
     def __str__(self):
         return f"{self.reservation.names} {self.seat_no} {self.ticket_class}"
 
+# lisst = [1,2,3,4,5]
+# for i in range(len(lisst)-1):
+#     del lisst[0]
 
+# [2, 3, 4, 5]
+# [3, 4, 5]
+# [4, 5]
+# [5]
 
 @receiver(post_save, sender=Reservation)
 def create_eticket(sender, instance, created, **kwargs):
     if created:
         slots = [slot for slot in instance.ticket.event.available_slots.all() if slot.category == instance.ticket.category]
+        aseats=[i.seats for i in slots][0]
+        seat_no=aseats[0]
         Eticket.objects.create(reservation=instance,ticket_class=str(instance.ticket.category),
-        seat_no=[i.seats[i] for i in slots][0])
+        seat_no=seat_no)
+        # del aseats[0]
 
 @receiver(post_save, sender=Reservation)
 def save_eticket(sender, instance, **kwargs):

@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+
 from .models import *
 from .forms import *
 
@@ -57,7 +59,9 @@ def home(request):
     if request.method == 'POST':  
         form = PaymentCategoriesForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            category = form.save(commit=False)
+            category.company = request.user
+            category.save()
             return redirect('home')
 
 
@@ -68,14 +72,31 @@ def home(request):
 
 
     return render(request, 'tickets/home.html', context)
+# @login_required
+# def slot(request):
+#     if request.method == 'POST':
+#         form = SlotForm(request.user, request.POST)
+#         if form.is_valid():
+#             slot = form.save(commit=False)
+#             slot.company = request.user
+#             slot.save()
+#             return redirect('slot')
+#     else:
+#         form = SlotForm(request.user)
+#     return render(request, 'tickets/slot.html', {'form': form})
 
 def slot(request): 
+    companycat = PaymentCategories.objects.filter(company=request.user)
+    # comppany = request.user
 
     form = SlotForm()
+    form.fields['category'].queryset = PaymentCategories.objects.filter(company=request.user)
     if request.method == 'POST':  
-        form = SlotForm(request.POST, request.FILES)
+        form = SlotForm( request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            slot = form.save(commit=False)
+            slot.company = request.user
+            slot.save()
             return redirect('slot')
 
     context = {
@@ -88,6 +109,7 @@ def slot(request):
 def event(request): 
 
     form = EventForm()
+    form.fields['available_slots'].queryset = PaymentCategories.objects.filter(company=request.user)
     if request.method == 'POST':  
         form = EventForm(request.POST, request.FILES)
         if form.is_valid():
@@ -106,6 +128,9 @@ def event(request):
 def ticket(request): 
 
     form = TicketForm()
+    form.fields['event'].queryset = Event.objects.filter(company=request.user)
+    form.fields['category'].queryset = PaymentCategories.objects.filter(company=request.user)
+
     if request.method == 'POST':  
         form = TicketForm(request.POST, request.FILES)
         if form.is_valid():

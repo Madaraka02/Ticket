@@ -21,15 +21,36 @@ class VenueForm(ModelForm):
 class PaymentCategoriesForm(ModelForm):
     class Meta:
         model = PaymentCategories
-        fields = "__all__"
+        fields = ["name"]
 
 class SlotForm(ModelForm):
+        # menu = forms.ModelChoiceField(queryset=Menu.objects.filter(id=1))
+    # category = forms.ModelChoiceField(queryset=PaymentCategories.objects.none(),)
+
     class Meta:
         model =  Slot   
-        fields = '__all__'
+        fields = ('theatre','category','number_of_seats','from_seat_number','to_seat_number',)
+
+    # def __init__(self, *args, **kwargs):
+    #     request = kwargs.pop('request', None)
+    #     super().__init__(*args, **kwargs)
+    #     if request:
+    #         user = request.user
+    #         self.fields['category'].queryset = PaymentCategories.objects.filter(company=user)
+
+        # def __init__(self, user, *args, **kwargs):
+        #     super(SlotForm, self).__init__(*args, **kwargs)
+        #     self.fields['category'].queryset = PaymentCategories.objects.filter(company=user)
+
+        # def __init__(self, *args, **kwargs):
+        #     user = kwargs.pop('user','')
+        #     super(SlotForm, self).__init__(*args, **kwargs)
+        #     self.fields['category']=forms.ModelChoiceField(queryset=PaymentCategories.objects.filter(company=user))
 
 class EventForm(ModelForm):
     # to include company -User
+    # available_slots = forms.ModelMultipleChoiceField(queryset=Slot.objects.none(),)
+
     class Meta:
         model = Event
         fields = ['owner','title','description','banner','date','starting_from','closed','available_slots']
@@ -38,11 +59,23 @@ class EventForm(ModelForm):
             'starting_from': TimePickerInput(),
         } 
 
+        # def __init__(self, user, *args, **kwargs):
+        #     super(EventForm, self).__init__(*args, **kwargs)
+        #     self.fields['available_slots'].queryset = PaymentCategories.objects.filter(company=user)
+
 class TicketForm(ModelForm):
     # to include Event
+    # event = forms.ModelChoiceField(queryset=Event.objects.none(),)
+    # category = forms.ModelChoiceField(queryset=PaymentCategories.objects.none(),)
+
+
     class Meta:
         model = Ticket
-        fields = '__all__'       
+        fields = ['event','category','price']     
+
+                # def __init__(self, user, *args, **kwargs):
+        #     super(EventForm, self).__init__(*args, **kwargs)
+        #     self.fields['available_slots'].queryset = PaymentCategories.objects.filter(company=user)  
 
 class ReservationForm(ModelForm):
     # to include Ticket
