@@ -40,7 +40,10 @@ class Slot(models.Model):
         available_seats = [seat for seat in range((self.from_seat_number), (self.to_seat_number +1))]
         return available_seats
 
-
+    @property
+    def numberOfSeats(self):
+        # available_seats = [seat for seat in range((self.from_seat_number), (self.to_seat_number +1))]
+        return len(self.seats)
 
     def __str__(self):
         return self.theatre
@@ -84,6 +87,9 @@ class Reservation(models.Model):
     names = models.CharField(max_length=500, blank=True, null=True)
     email = models.EmailField(max_length=500, blank=True, null=True)
     phone_number = PhoneNumberField()
+    row_no = models.CharField(max_length=5, null=True, blank=True) 
+    column_no = models.CharField(max_length=5, null=True, blank=True) 
+
     paid = models.BooleanField(default=False)
 
 
@@ -94,7 +100,7 @@ class Reservation(models.Model):
     
 class Eticket(models.Model):
     reservation = models.OneToOneField(Reservation, on_delete=models.CASCADE) 
-    seat_no = models.CharField(max_length=20, null=True, blank=True) 
+    seat_no = models.CharField(max_length=20, null=True, blank=True)     
     ticket_class = models.CharField(max_length=20, null=True, blank=True)  
 
     def __str__(self):

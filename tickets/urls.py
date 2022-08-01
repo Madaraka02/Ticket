@@ -9,5 +9,6 @@ urlpatterns=[
     path('add-ticket/', ticket, name='ticket'),
     path('events/<int:id>/', eventDetail, name='event_details'),
     path('ticket/<int:id>/', ticketDetail, name='ticket_details'),
+    path('host/dasshboard/', host_dash, name='host_dash')
 
 ]

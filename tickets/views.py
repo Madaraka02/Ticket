@@ -109,7 +109,7 @@ def slot(request):
 def event(request): 
 
     form = EventForm()
-    form.fields['available_slots'].queryset = PaymentCategories.objects.filter(company=request.user)
+    form.fields['available_slots'].queryset = Slot.objects.filter(company=request.user)
     if request.method == 'POST':  
         form = EventForm(request.POST, request.FILES)
         if form.is_valid():
@@ -143,3 +143,12 @@ def ticket(request):
 
 
     return render(request, 'tickets/ticket.html', context)
+
+@login_required
+def host_dash(request):  
+    # All events
+    # All active events
+    # Ticket sales per Category
+    # Link to create events
+    # Total money generation
+    return render(request, 'tickets/hostdash.html', context)

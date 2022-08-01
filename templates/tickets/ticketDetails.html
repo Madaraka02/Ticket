@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Ticket | Details</title>
         <!-- Bootstrap CSS -->
         <!-- Font Awesome -->
         <link
@@ -44,7 +44,9 @@
                         <p class="card-text">
                             {% for slot in ticket.event.available_slots.all %}
                             {% if slot.category == ticket.category %}
-                            {% if reservations == slot.number_of_seats%}
+                            {% if reservations == slot.numberOfSeats%} 
+                            <!-- number_of_slots -->
+                            
                             <del>
                             <span class="badge bg-danger" style="font-size: larger; font-weight: 800;">SOLD OUT</span>
                             </del>
@@ -53,7 +55,7 @@
 
                             <span class="badge bg-danger" style="font-size: medium; font-weight: bold;">{{reservations}}</span>
                             out of 
-                            <span class="badge bg-success" style="font-size: medium; font-weight: bold;">{{ slot.number_of_seats  }}</span>
+                            <span class="badge bg-success" style="font-size: medium; font-weight: bold;">{{ slot.numberOfSeats  }}</span>
 
                             {% endif %}
                             {% endif %}

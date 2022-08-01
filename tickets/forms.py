@@ -81,4 +81,4 @@ class ReservationForm(ModelForm):
     # to include Ticket
     class Meta:
         model = Reservation
-        fields = ['names','email','phone_number']
+        fields = ['names','email','phone_number','row_no','column_no']
