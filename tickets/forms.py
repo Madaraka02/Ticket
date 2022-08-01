@@ -57,6 +57,8 @@ class EventForm(ModelForm):
         widgets = {
             'date': DateInput(attrs={'min': today}),
             'starting_from': TimePickerInput(),
+            'description': forms.Textarea(attrs={'cols':4, 'rows':6}),
+
         } 
 
         # def __init__(self, user, *args, **kwargs):
