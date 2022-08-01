@@ -46,7 +46,7 @@ class Slot(models.Model):
         return len(self.seats)
 
     def __str__(self):
-        return self.theatre
+        return self.category.name
 
 
 
