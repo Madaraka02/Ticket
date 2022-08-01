@@ -38,7 +38,6 @@
                         <div class="card mt-2 mb-2">
                             <div class="card-body">
                                 <p class="card-text"> {{ event.company.username }} </p>
-                                <p class="card-text"> {{ event.owner }} </p>
                                 <a href="{% url 'event_details' event.id %}" class="card-text"> {{ event.title }} </a>
                                 <p class="card-text"> {{ event.date }} </p>
                                 <!-- {% for slot in event.available_slots.all %}

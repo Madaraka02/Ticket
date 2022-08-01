@@ -53,7 +53,7 @@ class Slot(models.Model):
 
 class Event(models.Model):
     company = models.ForeignKey(User, on_delete=models.CASCADE)
-    owner = models.CharField(max_length=300, blank=True, null=True)
+    # owner = models.CharField(max_length=300, blank=True, null=True)
     title = models.CharField(max_length=300, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     banner = models.FileField(upload_to="events/banners", null=True, blank=True)

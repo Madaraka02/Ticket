@@ -53,7 +53,7 @@ class EventForm(ModelForm):
 
     class Meta:
         model = Event
-        fields = ['owner','title','description','banner','date','starting_from','closed','available_slots']
+        fields = ['title','description','banner','date','starting_from','closed','available_slots']
         widgets = {
             'date': DateInput(attrs={'min': today}),
             'starting_from': TimePickerInput(),
