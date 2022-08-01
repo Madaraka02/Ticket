@@ -55,7 +55,8 @@
 
                             <span class="badge bg-danger" style="font-size: medium; font-weight: bold;">{{reservations}}</span>
                             out of 
-                            <span class="badge bg-success" style="font-size: medium; font-weight: bold;">{{ slot.numberOfSeats  }}</span>
+                        available slots : {{slot.numberOfSeats|sub:reservations }}
+                        <span class="badge bg-success" style="font-size: medium; font-weight: bold;">{{ slot.numberOfSeats  }}</span>
 
                             {% endif %}
                             {% endif %}

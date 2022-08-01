@@ -40,12 +40,11 @@
             </div>
             <div class="card shadow-md mt-2 mb-2">
                 <div class="card-body">
-                    <p class="card-text">{{tickets.count}}</p>
                     {% for ticket in tickets %}
                         <div class="card">
                             <div class="card-body">
                                 {{ticket.category}}
-                                <a class="stretched-link" href="{% url 'ticket_details' ticket.id  %}"></a>
+                                <a class="stretched-link" href="{% url 'ticket_details' ticket.id  %}">View</a>
                             </div>
                         </div>
                     {% endfor %}

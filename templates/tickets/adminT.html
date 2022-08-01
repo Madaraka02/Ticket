@@ -32,10 +32,36 @@
         <div class="col mt-2 mb-2">
                 <div class="card shadow-md mt-2 mb-2">
                     <div class="card-body">
-                        <p class="card-text">{{ ticket.category }}</p>
+                        <p class="card-text">{{ ticket.category }} for {{ticket.event}}</p>
                         <p class="card-text">ksh {{ ticket.price }} </p>
-                        <a href="{% url 'host_ticket_edit' ticket.id %}">Update</a>
+                        <a href="{% url 'admin_ticket_edit' ticket.id %}">Update</a>
                         <a href="{% url 'admin_ticket_delete' ticket.id %}">Delete</a>
+                        {% for rsvp in ticket.reservation_set.all  %}
+                            {{rsvp.count}}
+                        {% endfor %}
+                        {% for slot in ticket.event.available_slots.all %}
+                        {% if slot.category == ticket.category %}
+                        {% if reservations == slot.numberOfSeats%} 
+                        <!-- number_of_slots -->
+                        
+                        <del>
+                        <span class="badge bg-danger" style="font-size: larger; font-weight: 800;">SOLD OUT</span>
+                    
+                        </del>
+                        <p>
+                        </p>
+                        {% else %}
+                        Booked:
+
+                        <span class="badge bg-danger" style="font-size: medium; font-weight: bold;">{{reservations}}</span>
+                        out of 
+                        <span class="badge bg-success" style="font-size: medium; font-weight: bold;">{{ slot.numberOfSeats  }}</span>
+                        totalcollected : {{reservations|mul:ticket.price }}
+                        available slots : {{slot.numberOfSeats|sub:reservations }}
+
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
    
                     </div>
                 </div>

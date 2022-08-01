@@ -11,11 +11,11 @@ urlpatterns=[
     path('ticket/<int:id>/', ticketDetail, name='ticket_details'),
     path('host/dashboard/', host_dash, name='host_dash'),
     path('host/events/', host_events, name='host_events'),
-    path('host/events/<int:id>/', host_event_edit, name='host_event_edit'),
-    path('host/events/<int:id>/', host_event_delete, name='host_event_delete'),
+    path('host/events/<int:id>/update/', host_event_edit, name='host_event_edit'),
+    path('host/events/<int:id>/delete/', host_event_delete, name='host_event_delete'),
     path('host/ticket/<int:id>/', host_ticket_details, name='host_ticket_details'),
-    path('host/ticket/<int:id>/', admin_ticket_edit, name='host_ticket_edit'),
-    path('host/ticket/<int:id>/', admin_ticket_delete, name='admin_ticket_delete'),
+    path('host/ticket/<int:id>/update/', admin_ticket_edit, name='admin_ticket_edit'),
+    path('host/ticket/<int:id>/delete/', admin_ticket_delete, name='admin_ticket_delete'),
 
 ]
 
