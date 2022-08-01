@@ -53,7 +53,7 @@ def ticketDetail(request, id):
         'all_slots':all_slots
     }
     return render(request, 'tickets/ticketDetails.html', context)
-
+@login_required
 def home(request):
     form = PaymentCategoriesForm()
     if request.method == 'POST':  
@@ -71,7 +71,7 @@ def home(request):
     }        
 
 
-    return render(request, 'tickets/home.html', context)
+    return render(request, 'tickets/events.html', context)
 # @login_required
 # def slot(request):
 #     if request.method == 'POST':
@@ -85,6 +85,7 @@ def home(request):
 #         form = SlotForm(request.user)
 #     return render(request, 'tickets/slot.html', {'form': form})
 
+@login_required
 def slot(request): 
     companycat = PaymentCategories.objects.filter(company=request.user)
     # comppany = request.user
@@ -104,8 +105,9 @@ def slot(request):
     }        
 
 
-    return render(request, 'tickets/slot.html', context)
-    
+    return render(request, 'tickets/events.html', context)
+
+@login_required
 def event(request): 
 
     form = EventForm()
@@ -125,6 +127,7 @@ def event(request):
 
     return render(request, 'tickets/events.html', context)
 
+@login_required
 def ticket(request): 
 
     form = TicketForm()
@@ -142,7 +145,7 @@ def ticket(request):
     }        
 
 
-    return render(request, 'tickets/ticket.html', context)
+    return render(request, 'tickets/events.html', context)
 
 @login_required
 def host_dash(request):  
