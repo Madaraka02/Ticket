@@ -8,7 +8,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>
+      {% block title %}
+      {% endblock title %}
+    </title>
         <!-- Bootstrap CSS -->
         <!-- Font Awesome -->
         <link
@@ -43,6 +46,9 @@
       <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
         <ul class="navbar-nav mx-auto">
           <li class="nav-item">
+            <a class="nav-link btn btn-outline-secondary btn-md m-2 text-white" href="{% url 'index' %}">MAIN SITE</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link active btn btn-outline-secondary btn-md m-2 text-white" aria-current="page" href="{% url 'home' %}">CATEGORY</a>
           </li>
           <li class="nav-item">
@@ -53,9 +59,8 @@
           </li>
           <li class="nav-item">
             <a class="nav-link btn btn-outline-secondary btn-md m-2 text-white" href="{% url 'ticket' %}">PRICES</a >
-
-
           </li>
+
         </ul>
         {% if request.user.is_authenticated %}
         <div class="me-3">

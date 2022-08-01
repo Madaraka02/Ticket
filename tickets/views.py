@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
 
 from .models import *
 from .forms import *
@@ -245,3 +247,79 @@ def admin_ticket_delete(request, id):
     ticket = get_object_or_404( Ticket, id=id)
     ticket.delete()
     return redirect('host_ticket_details', id=ticket.id)
+
+@login_required
+def site_admin(request):
+    # all events RD
+    # all reservations RD
+    # register hosts
+
+    if request.user.is_authenticated and request.user.is_staff:
+
+        # reservations = Reservation.objects.all().order_by('-id')
+        # events = Event.objects.all().order_by('-id')
+
+
+        events_list = Event.objects.all().order_by('-id')
+        page = request.GET.get('page', 1)
+        paginator = Paginator(events_list, 10)
+
+        try:
+            events = paginator.page(page)
+        except PageNotAnInteger:
+            events = paginator.page(1)
+        except EmptyPage:
+            events = paginator.page(paginator.num_pages)
+
+        rsvp_list = Reservation.objects.all().order_by('-id')
+        page = request.GET.get('page', 1)
+        paginator = Paginator(rsvp_list, 10)
+
+        try:
+            reservations = paginator.page(page)
+        except PageNotAnInteger:
+            reservations = paginator.page(1)
+        except EmptyPage:
+            reservations = paginator.page(paginator.num_pages)
+
+        context = {
+            'reservations':reservations,
+            'events':events,
+        }
+
+        return render(request, 'adm/index.html',context)  
+
+    return redirect('index')      
+
+@login_required
+def site_admin_ticket_delete(request, id): 
+    event = get_object_or_404( Event, id=id)    
+    event.delete()
+    return redirect('site_admin')
+
+@login_required
+def site_admin_rsvp_delete(request, id): 
+    rsvp = get_object_or_404( Reservation, id=id)    
+    rsvp.delete()
+    return redirect('site_admin')
+
+@login_required
+def site_admin_event_edit(request, id):
+    event = get_object_or_404( Event, id=id)
+
+    form = EventForm(instance=event)
+    if request.method == 'POST':  
+        form = EventForm(request.POST, request.FILES,instance=event)
+        if form.is_valid():
+            event = form.save(commit=False)
+            event.company = request.user
+            event.save()
+            return redirect('site_admin')
+
+    context = {
+        'form':form,
+        'event':event,
+    }        
+
+
+    return render(request, 'tickets/events.html', context)   

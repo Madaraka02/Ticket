@@ -8,7 +8,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>
+        {% block title %}
+        {% endblock title %}
+    </title>
         <!-- Bootstrap CSS -->
         <!-- Font Awesome -->
         <link
@@ -42,7 +45,11 @@
       </button>
       <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
         <ul class="navbar-nav mx-auto">
-          {% if request.user.is_authenticated %}
+          {% if request.user.is_authenticated and request.user.is_staff %}
+          <li class="nav-item">
+            <a class="nav-link btn btn-outline-secondary  m-2 text-white" href="{% url 'site_admin' %}">ADMIN</a>
+          </li>
+          {% elif request.user.is_authenticated and not request.user.is_staff %}
           <li class="nav-item">
             <a class="nav-link btn btn-outline-secondary  m-2 text-white" href="{% url 'host_dash' %}">DASHBOARD</a>
           </li>

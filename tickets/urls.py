@@ -3,6 +3,12 @@ from .views import *
 
 urlpatterns=[
     path('', index, name='index'),
+
+    path('site-admin/', site_admin, name='site_admin'),
+    path('site-admin/events/<int:id>/delete/', site_admin_ticket_delete, name='site_admin_ticket_delete'),
+    path('site-admin/rsvp/<int:id>/delete/', site_admin_rsvp_delete, name='site_admin_rsvp_delete'),
+
+
     path('add-category/', home, name='home'),
     path('add-slot/', slot, name='slot'),
     path('add-event/', event, name='event'),
