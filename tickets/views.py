@@ -199,3 +199,46 @@ def host_event_delete(request, id):
     event = get_object_or_404( Event, id=id)    
     event.delete()
     return redirect('host_events')
+
+
+@login_required
+def host_ticket_details(request, id):
+    ticket = get_object_or_404( Ticket, id=id)
+
+    reservations = Reservation.objects.filter(ticket=ticket).count()
+
+
+    context = {
+        'ticket':ticket,
+        'reservations':reservations,
+    }
+    return render(request, 'tickets/adminT.html', context)
+
+@login_required
+def admin_ticket_edit(request, id): 
+    ticket = get_object_or_404( Ticket, id=id)
+
+
+    form = TicketForm(instance=ticket)
+    form.fields['event'].queryset = Event.objects.filter(company=request.user)
+    form.fields['category'].queryset = PaymentCategories.objects.filter(company=request.user)
+
+    if request.method == 'POST':  
+        form = TicketForm(request.POST, request.FILES, instance=ticket)
+        if form.is_valid():
+            form.save()
+            return redirect('host_ticket_details' ,id=ticket.id)
+
+    context = {
+        'form':form,
+        'ticket':ticket
+    }        
+
+
+    return render(request, 'tickets/adminTickets.html', context)
+
+@login_required
+def admin_ticket_delete(request, id): 
+    ticket = get_object_or_404( Ticket, id=id)
+    ticket.delete()
+    return redirect('host_ticket_details', id=ticket.id)

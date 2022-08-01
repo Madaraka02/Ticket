@@ -30,28 +30,16 @@
     <div class="container mt-2 mb-2">
         <div class="row mt-2 mb-2">
         <div class="col mt-2 mb-2">
-            {% for event in events %}
                 <div class="card shadow-md mt-2 mb-2">
                     <div class="card-body">
-                        <p class="card-text">{{ event.title }}</p>
-                        <a href="{% url 'host_event_edit' event.id %}">Update</a>
-                        <a href="{% url 'host_event_delete' event.id %}">Delete</a>
-                        {% for ticket in event.ticket_set.all %}
-                        <a href="{% url 'host_ticket_details' ticket.id %}">
-                            <span class="badge badge-success">{{ ticket.category }} <strong style="color: brown; font-size: small; font-weight: 800;">ksh: {{ ticket.price }} </strong>
-                                {% for slot in ticket.event.available_slots.all %}
-                                {% if slot.category == ticket.category %}
-                                    {{ slot.numberOfSeats }} seats 
-                                {% endif %}
-                                {% endfor %}
-                                </span>
-                                </a>
-                                {% endfor %}
-
-                        
+                        <p class="card-text">{{ ticket.category }}</p>
+                        <p class="card-text">ksh {{ ticket.price }} </p>
+                        <a href="{% url 'host_ticket_edit' ticket.id %}">Update</a>
+                        <a href="{% url 'admin_ticket_delete' ticket.id %}">Delete</a>
+   
                     </div>
                 </div>
-            {% endfor %}
+
         </div>
     </div>
     </div>
