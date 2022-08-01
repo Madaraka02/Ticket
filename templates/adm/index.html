@@ -100,12 +100,15 @@
                     </td>
                     <td>
                         {{event.date|date:"M Y d"}}
+                        <span class="badge badge-success">{{event.starting_from}} 
+                        </span>
+
                     </td>
                     <td><p class="fw-normal mb-1">
                         {%  if event.closed == True %}
-                        <span class="badge badge-success">CLOSED</span>
+                        <span class="badge badge-danger">CLOSED</span>
                         {% else %}
-                        <span class="badge badge-danger">OPEN</span>
+                        <span class="badge badge-success">OPEN</span>
     
                         {% endif %}
     
