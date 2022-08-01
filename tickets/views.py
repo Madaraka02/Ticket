@@ -62,7 +62,7 @@ def home(request):
             category = form.save(commit=False)
             category.company = request.user
             category.save()
-            return redirect('home')
+            return redirect('host_dash')
 
 
 
@@ -97,7 +97,7 @@ def slot(request):
             slot = form.save(commit=False)
             slot.company = request.user
             slot.save()
-            return redirect('slot')
+            return redirect('host_dash')
 
     context = {
         'form':form,
@@ -146,9 +146,56 @@ def ticket(request):
 
 @login_required
 def host_dash(request):  
-    # All events
-    # All active events
-    # Ticket sales per Category
-    # Link to create events
-    # Total money generation
+
+    events = Event.objects.filter(company=request.user)
+    tickets = Ticket.objects.filter(event__in=events)
+    categories = PaymentCategories.objects.filter(company=request.user)
+    reservations = Reservation.objects.filter(ticket__in=tickets)
+
+    context = {
+        'events':events,
+        'tickets':tickets,
+        'reservations':reservations,
+        'categories':categories,
+    }
+
     return render(request, 'tickets/hostdash.html', context)
+
+@login_required
+def host_events(request):  
+
+    events = Event.objects.filter(company=request.user).order_by('-id')
+
+    context = {
+        'events':events,
+    }
+
+    return render(request, 'tickets/adminEvents.html', context)    
+
+@login_required
+def host_event_edit(request, id):
+    event = get_object_or_404( Event, id=id)
+
+    form = EventForm(instance=event)
+    form.fields['available_slots'].queryset = Slot.objects.filter(company=request.user)
+    if request.method == 'POST':  
+        form = EventForm(request.POST, request.FILES,instance=event)
+        if form.is_valid():
+            event = form.save(commit=False)
+            event.company = request.user
+            event.save()
+            return redirect('host_events')
+
+    context = {
+        'form':form,
+        'event':event,
+    }        
+
+
+    return render(request, 'tickets/events.html', context)    
+
+@login_required
+def host_event_delete(request, id):
+    event = get_object_or_404( Event, id=id)    
+    event.delete()
+    return redirect('host_events')

@@ -29,22 +29,42 @@
 <body>
     <div class="container mt-2 mb-2">
         <div class="row mt-2 mb-2">
+        <div class="col mt-2 mb-2">
             <div class="card shadow-md mt-2 mb-2">
                 <div class="card-body">
-                    <p class="card-text">Events</p>
+                    <p class="card-text">{{events.count}}</p>
+                    <a class="stretched-link" href="{% url 'host_events' %}"> View all</a>
+
+
                 </div>
             </div>
             <div class="card shadow-md mt-2 mb-2">
                 <div class="card-body">
-                    <p class="card-text">Events</p>
+                    <p class="card-text">{{tickets.count}}</p>
+                    {% for ticket in tickets %}
+                        <div class="card">
+                            <div class="card-body">
+                                {{ticket.category}}
+                                <a class="stretched-link" href="{% url 'ticket_details' ticket.id  %}"></a>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="card shadow-md mt-2 mb-2">
                 <div class="card-body">
-                    <p class="card-text">Events</p>
+                    <p class="card-text">
+                        {% for category in categories %}
+                            {{category.name}}
+                            {% if category.name in reservations %}
+                                {{ reservations.count }}
+                            {% endif %}
+                        {% endfor %}
+                    </p>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 
