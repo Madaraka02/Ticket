@@ -7,10 +7,11 @@ Host | Tickets
     {% block content %}
     <div class="container mt-2 mb-2">
         <div class="row mt-2 mb-2">
-        <div class="col mt-2 mb-2">
-                <div class="card shadow-md mt-2 mb-2">
+            <div class="col-md-3 mt-2 mb-2"></div>
+        <div class="col-md-6 mt-2 mb-2">
+                <div class="card shadow-md mt-2 mb-2 bg-dark">
                     <div class="card-body">
-                        <h5 class="card-text text-center">{{ ticket.category }} ticket for {{ticket.event}} 
+                        <h5 class="card-text text-white">{{ ticket.category }} ticket for {{ticket.event}} 
                             going for ksh {{ ticket.price }}</h5>
                         <p class="card-text"> </p>
                         <div class="">
@@ -29,16 +30,18 @@ Host | Tickets
                         <p>
                         </p>
                         {% else %}
-                        Booked:
+                        <p class="text-white" >
 
-                        <span class="badge bg-danger" style="font-size: medium; font-weight: bold;">{{reservations}}</span>
+                        <span class="badge text-danger" style="font-size: medium; font-weight: bold;">{{reservations}}</span>
                         /
-                        <span class="badge bg-success" style="font-size: medium; font-weight: bold;">{{ slot.numberOfSeats  }}</span>
-                        <p>
-                            Sold : {{reservations|mul:ticket.price }}
+                        <span class="badge text-success" style="font-size: medium; font-weight: bold;">{{ slot.numberOfSeats  }}</span>
+                        booked</p>
+                        <p class="text-white">
+                            Sold : Ksh {{reservations|mul:ticket.price }}
                         </p>
-                        <p>
-                            available slots : {{slot.numberOfSeats|sub:reservations }}
+                        <p class="text-success">
+                            {{slot.numberOfSeats|sub:reservations }}
+                            <span class="text-white">available slots</span>
 
                         </p>
 
@@ -48,13 +51,15 @@ Host | Tickets
                         {% endfor %}
                     </div>
 
-                        <a href="{% url 'admin_ticket_edit' ticket.id %}">Update</a>
-                        <a href="{% url 'admin_ticket_delete' ticket.id %}">Delete</a>
+                        <a class="text-secondary" href="{% url 'admin_ticket_edit' ticket.id %}">Update</a>
+                        <a class="text-secondary float-end" href="{% url 'admin_ticket_delete' ticket.id %}">Delete</a>
 
                     </div>
                 </div>
 
         </div>
+        <div class="col-md-3 mt-2 mb-2"></div>
+
     </div>
     </div>
 
