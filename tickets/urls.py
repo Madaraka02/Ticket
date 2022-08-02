@@ -19,6 +19,10 @@ urlpatterns=[
     path('ticket/<int:id>/', ticketDetail, name='ticket_details'),
     path('host/dashboard/', host_dash, name='host_dash'),
     path('host/events/', host_events, name='host_events'),
+
+    path('host/sales/', host_sales, name='host_sales'),
+
+
     path('host/events/<int:id>/update/', host_event_edit, name='host_event_edit'),
     path('host/events/<int:id>/delete/', host_event_delete, name='host_event_delete'),
     path('host/ticket/<int:id>/', host_ticket_details, name='host_ticket_details'),

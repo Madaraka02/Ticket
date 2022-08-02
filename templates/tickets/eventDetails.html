@@ -17,13 +17,13 @@ Event | Details
                 <p class="text-center"></p>
                 {% if event %}
                 <div class="card mt-2 mb-2 shadow-lg">
-                    <div class="card-body">
+                    <div class="card-body bg-dark text-white">
 <!-- available_slots -->
-                        <h5 class="card-tittle">{{event.title}}</h5>
-                        <p class="card-text">By {{ event.company.username }} </p>
+                        <h5 class="card-tittle text-secondary">{{event.title}}</h5>
+                        <p class="card-text">{{ event.company.username }} </p>
                         <p class="card-text"> {{ event.description }} </p>
-                        <p class="card-text">Date: {{ event.date|date:"Y M d" }} </p>
-                        <p class="card-text">Starting time: {{ event.starting_from }} </p>
+                        <p class="card-text">{{ event.date|date:"Y M d" }} <span class="badge">{{ event.starting_from }}</span></p>
+                        
                         <!-- {% for slot in event.available_slots.all %}
                         <span class="badge badge-success">{{ slot.category.name }} {{ slot.number_of_seats }} </span>
 

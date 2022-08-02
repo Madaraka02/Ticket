@@ -299,6 +299,25 @@ def admin_ticket_delete(request, id):
     ticket.delete()
     return redirect('host_ticket_details', id=ticket.id)
 
+def host_sales(request):
+
+    rsvp_list = Reservation.objects.filter(ticket__event__company=request.user).order_by('-id')
+    page = request.GET.get('page', 1)
+    paginator = Paginator(rsvp_list, 10)
+
+    try:
+        reservations = paginator.page(page)
+    except PageNotAnInteger:
+        reservations = paginator.page(1)
+    except EmptyPage:
+        reservations = paginator.page(paginator.num_pages)
+
+    context = {
+        'reservations':reservations,
+    }
+    return render(request, 'tickets/hostsales.html', context)
+
+
 @login_required
 def site_admin(request):
     # all events RD

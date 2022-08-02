@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block title %}
+Host | Sales
+{% endblock title %}
+{% block content %}
+
+<div id="addclient" class="container mt-4 mb-4">
+    <div class="row mt-4 mb-4">
+        <div class="col-md-1"></div>
+
+        <div class=" col-md-10 mt-4 mb-4 shadow-lg">
+          <!-- <a href="{% url 'index' %}" class="btn btn-outline-primary btn-md m-2">MPESA</a> -->
+
+            <h6 class="text-uppercase mt-2 mb-2 text-white">All Sales 
+            <span class="float-end">
+
+            </span>
+        </h6>
+        <table class="table align-middle mb-2 bg-white">
+            <thead class="bg-light">
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Event</th>
+                <th>Ticket</th>
+                <th>Delete</th>
+
+
+              </tr>
+            </thead>
+            {% if reservations  %}
+            <tbody>
+                
+                {% for reservation in reservations %}
+              <tr>
+                  <td><p class="fw-bold mb-1">{{reservation.names}}</p></td>
+                  <td>
+                      {{reservation.email}}
+                  </td>
+                  <td>
+                    {{reservation.phone_number}}
+                </td>
+                <td>
+                    {{reservation.ticket.event.title}} 
+                </td>
+                <td>
+                    <span class="badge badge-success">{{reservation.ticket.category}} {{reservation.ticket.price}}</span>
+                </td>
+
+                <td>
+                    <a href="{% url 'site_admin_rsvp_delete' reservation.id %}" class="btn btn-outline-danger">Delete</a>
+                </td>
+              </tr>
+              {% endfor %}
+
+        
+            </tbody>
+            {% endif %}
+
+          </table>
+
+          <div class="container mt-2 align-items-center justify-content-center">
+            <div class="row text-center">
+
+
+          <nav aria-label="Page navigation example">
+              <ul class="pagination ">
+                {% if reservations.has_previous %}    
+                <li class="page-item">
+                  <a href="?page={{ reservations.previous_page_number }}" class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="#">
+                  page {{ reservations.number }} of {{ reservations.paginator.num_pages }}
+                </a></li>
+                {% if events.has_next %}
+                <li class="page-item">
+                  <a href="?page={{ reservations.next_page_number }}" class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+                {% endif %}
+              </ul>
+            </nav>
+          </div>
+        </div>
+                        <!-- <p class="card-text">bids</p> -->
+                        <!-- {% for itbid in item.bid_set.all %}
+                            {{itbid.price}}
+                        {%  endfor %} -->
+
+
+
+        </div>
+        <div class="col-md-1"></div>
+
+    </div>
+</div>
+
+{% endblock content %}

@@ -15,10 +15,10 @@ Reservation
             <div class="col-md-7 mt-4 mb-4 p-3">
                 <p class="text-center"></p>
                 {% if ticket %}
-                <div class="card mt-2 mb-2 bg-dark">
-                    <div class="card-body">
+                <div class="card bg-dark">
+                    <div class="card-body text-white">
 <!-- available_slots -->
-                        <h5 class="card-tittle text-center">Book {{ ticket.category }} ticket for {{ticket.event}}</h5>
+                        <h5 class="card-tittle text-center text-secondary">Book {{ ticket.category }} ticket for {{ticket.event}}</h5>
                         <p class="card-text">Ksh {{ ticket.price }} </p>
                         
                         
@@ -32,13 +32,13 @@ Reservation
                             <span class="badge bg-danger" style="font-size: larger; font-weight: 800;">SOLD OUT</span>
                             </del>
                             {% else %}
-                            <p class="card-text">Available slots : {{slot.numberOfSeats|sub:reservations }}</p>
-                            Booked:
-
-                            <span class="badge bg-danger" style="font-size: medium; font-weight: bold;">{{reservations}}</span>
+                            <p class="card-text text-success">{{slot.numberOfSeats|sub:reservations }} <span class="text-white">remaining slots</span></p> 
+                            <p style="font-size: medium; font-weight: bold;">
+                            <span class="badge text-danger" style="font-size: medium; font-weight: bold;">{{reservations}}</span>
                             out of 
-                        <span class="badge bg-success" style="font-size: medium; font-weight: bold;">{{ slot.numberOfSeats  }}</span>
-
+                        <span class="badge text-success" style="font-size: medium; font-weight: bold;">{{ slot.numberOfSeats  }}</span>
+                            booked
+                        </p>
                             {% endif %}
                             {% endif %}
                             {% endfor %}
@@ -54,11 +54,17 @@ Reservation
             </div>
             <div class="col-md-4 mt-4 mb-4p-3 shadow-lg">
                 <p class="text-center">
-                    <form action="" method="post" class="text-white ">
-                        {% csrf_token %}
-                        {{form|crispy}}
-                        <button type="submit" class="btn btn-outline-secondary btn-lg mt-2 text-white">  Book Ticket</button>
-                    </form>
+                    <div class="card bg-dark shadow-lg mt-2 mb-2">
+                        <div class="card-body">
+                            <form action="" method="post" class="text-white">
+                                {% csrf_token %}
+                                {{form|crispy}}
+                                <button type="submit" class="btn btn-outline-secondary btn-lg mt-2 text-white">  Book Ticket</button>
+                            </form>
+
+                        </div>
+                    </div>
+
                 </p>
             </div>
 

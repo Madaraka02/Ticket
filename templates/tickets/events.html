@@ -16,10 +16,10 @@ Host | Post
             </div>
             <div class="col-md-4 mt-4 mb-4 p-3">
                 <p class="text-center"></p>
-                <form action="" method="post">
+                <form action="" method="post" class="text-white">
                     {% csrf_token %}
                     {{form|crispy}}
-                    <button type="submit" class="btn btn-outline-primary btn-lg mt-2">Save</button>
+                    <button type="submit" class="btn btn-outline-secondary text-white btn-lg mt-2">Save</button>
                 </form>
 
             </div>
