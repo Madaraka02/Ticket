@@ -15,8 +15,9 @@ Event | Details
             <div class="col-md-6 mt-4 mb-4 p-3">
                 <p class="text-center"></p>
                 {% if event %}
-                <div class="card mt-2 mb-2">
-                    <div class="card-body">
+                <div class="card mt-2 mb-2 bg-image shadow-lg"
+                style="background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/003.webp');">
+                    <div class="card-body text-white">
 <!-- available_slots -->
                         <h5 class="card-tittle">{{event.title}}</h5>
                         <p class="card-text">By {{ event.company.username }} </p>

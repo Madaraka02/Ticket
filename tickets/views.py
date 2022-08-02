@@ -171,6 +171,7 @@ def host_events(request):
 
     events = Event.objects.filter(company=request.user).order_by('-id')
 
+
     context = {
         'events':events,
     }

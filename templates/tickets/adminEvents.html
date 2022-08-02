@@ -7,8 +7,8 @@ Host | Events
    {% block content %}
     <div class="container mt-2 mb-2">
         <div class="row mt-2 mb-2">
-        <div class="col mt-2 mb-2">
-            {% for event in events %}
+        {% for event in events %}
+        <div class="col-md-3 mt-2 mb-2">
                 <div class="card shadow-md mt-2 mb-2">
                     <div class="card-body">
                         <p class="card-text">{{ event.title }}</p>
@@ -29,8 +29,8 @@ Host | Events
                         
                     </div>
                 </div>
-            {% endfor %}
         </div>
+        {% endfor %}
     </div>
     </div>
     {% endblock content %}

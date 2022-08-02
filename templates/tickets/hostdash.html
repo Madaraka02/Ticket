@@ -10,13 +10,22 @@ Host | Dashboard
         <div class="col mt-2 mb-2">
             <div class="card shadow-md mt-2 mb-2">
                 <div class="card-body">
-                    <p class="card-text">{{events.count}}</p>
+                    <h2 class="card-text">EVENTS</h2>
+                    <h2 class="card-text">{{events.count}}</h2>
                     <a class="stretched-link" href="{% url 'host_events' %}"> View all</a>
-
-
                 </div>
-            </div>
+            </div>       
         </div>
+
+        <div class="col mt-2 mb-2">
+                <div class="card shadow-md mt-2 mb-2">
+                    <div class="card-body">
+                    <h2 class="card-text">SALES</h2>
+                        <h2 class="card-text">{{reservations.count}}</h2>
+                    </div>
+                </div>     
+        </div>
+
     </div>
     </div>
 

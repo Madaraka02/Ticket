@@ -28,10 +28,21 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.2.0/mdb.min.css"
         rel="stylesheet"
         />
+        <style>
+          body {
+            /* https://img.freepik.com/free-vector/halftone-background-with-circles_23-2148907689.jpg?size=626&ext=jpg */
+            /* https://img.freepik.com/free-psd/abstract-background-design_1297-87.jpg?size=626&ext=jpg */
+            background-image: url("https://img.freepik.com/premium-photo/neon-circle-dark-street-background-reflection-blue-red-neon-asphalt_129911-28.jpg?size=626&ext=jpg");
+            background-size: cover;
+            /*  */
+            /* background-color: #cccccc; */
+            }
+
+        </style>
 </head>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'host_dash' %}">HOME</a>
+      <a class="navbar-brand text-white" href="{% url 'host_dash' %}">HOME</a>
       <button
         class="navbar-toggler"
         type="button"
