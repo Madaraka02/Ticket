@@ -1,0 +1,28 @@
+{% extends 'base2.html' %}
+{% block title %}
+Search
+{% endblock title %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container mt-2 mb-2">
+    <div class="row mt-2 mb-2">
+{% if results %}
+<h1>Results for <b>{{ request.GET.q }}</b></h1>
+<br/><br/>
+
+{% for result in results %}
+
+{{result.title}}
+<br/>
+
+
+{% endfor %}
+{% else %}
+No search results for this query
+{% endif %}
+
+    </div>
+</div>
+
+{% endblock content %}

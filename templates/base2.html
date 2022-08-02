@@ -33,7 +33,7 @@
             /* https://img.freepik.com/free-vector/halftone-background-with-circles_23-2148907689.jpg?size=626&ext=jpg */
             /* https://img.freepik.com/free-psd/abstract-background-design_1297-87.jpg?size=626&ext=jpg */
             /* https://img.freepik.com/premium-photo/beautiful-background-particles-creating-abstract-wave-going-into-distance-with-depth_594970-393.jpg?size=626&ext=jpg */
-            background-image: url("https://img.freepik.com/free-vector/futuristic-technological-wallpaper_79603-1094.jpg?w=1380&t=st=1659397686~exp=1659398286~hmac=c2516bfb76ec39d14182d3908051bbcb4ff51ad079b36d00535e7d50351909c0");
+            background-image: url("https://img.freepik.com/premium-photo/grey-watercolor-soft-abstract-background_3590-96.jpg?size=626&ext=jpg");
             background-size: cover;
             /* https://img.freepik.com/free-photo/dark-blue-plain-wall-background_53876-92976.jpg?size=626&ext=jpg */
             /*https://img.freepik.com/free-photo/dark-blue-plain-textured-background-fabric-block-prints_53876-121808.jpg?w=1380&t=st=1659395824~exp=1659396424~hmac=d9c548fd6c4e507411982ce678953254388115b610275ef15d2d2737d11a67af  */
@@ -72,6 +72,23 @@
           </li>
           {% endif %}
         </ul>
+        <div class="me-3">
+          <form class="d-flex input-group w-auto" action="{% url 'search' %}" method="GET" value="{{request.GET.q}}">
+            <input
+            name="q" 
+            value="{{request.GET.q}}"
+              type="search"
+              class="form-control"
+              placeholder="Search"
+              aria-label="Search"
+              aria-describedby="search-addon"
+            />
+            <button type="submit"  class="btn btn-sm input-group-text border-0" id="search-addon">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+          
+        </div>
 
       </div>
 
@@ -80,7 +97,6 @@
 <body>
 {% block content %}
 {% endblock content %}
-
 
 
 

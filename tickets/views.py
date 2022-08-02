@@ -1,19 +1,69 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-
+from django.db.models import Q
 
 from .models import *
 from .forms import *
 
 # Create your views here.
 def index(request):
-    events = Event.objects.filter(closed=False).order_by('-id')
+    events_list = Event.objects.filter(closed=False).order_by('-id')
+    page = request.GET.get('page', 1)
+    paginator = Paginator(events_list, 5)
+
+    try:
+        events = paginator.page(page)
+    except PageNotAnInteger:
+        events = paginator.page(1)
+    except EmptyPage:
+        events = paginator.page(paginator.num_pages)
     
     context = {
         'events':events,
     }
     return render(request, 'tickets/index.html', context)
+    
+def search(request):
+
+    results = []
+
+    if request.method == "GET":
+
+        query = request.GET.get('search')
+
+        if query == '':
+
+            query = 'None'
+
+        results = Book.objects.filter(Q(book_name__icontains=query) | Q(author_name__icontains=query) | Q(price__icontains=query) )
+
+    return render(request, 'search.html', {'query': query, 'results': results})
+
+
+
+def searchevents(request):
+    if request.method == 'GET':
+        query= request.GET.get('q')
+
+        submitbutton= request.GET.get('submit')
+
+        if query is not None:
+            lookups= Q(title__icontains=query) | Q(description__icontains=query)
+
+            results= Event.objects.filter(lookups).distinct()
+
+            context={'results': results,
+                     'submitbutton': submitbutton}
+
+            return render(request, 'tickets/search.html', context)
+
+        else:
+            return render(request, 'tickets/search.html')
+
+    else:
+        return render(request, 'tickets/search.html')
+
 
 def eventDetail(request, id):
     event = get_object_or_404( Event, id=id)
