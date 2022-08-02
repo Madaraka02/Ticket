@@ -368,6 +368,12 @@ def site_admin_ticket_delete(request, id):
     return redirect('site_admin')
 
 @login_required
+def host_sales_delete(request, id): 
+    rsvp = get_object_or_404( Reservation, id=id)    
+    rsvp.delete()
+    return redirect('host_sales')
+
+@login_required
 def site_admin_rsvp_delete(request, id): 
     rsvp = get_object_or_404( Reservation, id=id)    
     rsvp.delete()

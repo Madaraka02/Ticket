@@ -28,6 +28,8 @@ urlpatterns=[
     path('host/ticket/<int:id>/', host_ticket_details, name='host_ticket_details'),
     path('host/ticket/<int:id>/update/', admin_ticket_edit, name='admin_ticket_edit'),
     path('host/ticket/<int:id>/delete/', admin_ticket_delete, name='admin_ticket_delete'),
+    path('host/sales/<int:id>/delete/', host_sales_delete, name='host_sales_delete'),
+
 
 ]
 
