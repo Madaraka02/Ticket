@@ -8,34 +8,29 @@ Home
 
     <div class="container mt-4 mb-4 align-items-center justify-content-center">
         <div class="row mt-4 mb-4">
-            <div class="col-md-4 mt-4 mb-4 p-3">
+            <div class="col-md-3 mt-4 mb-4 p-3">
                 <p class="text-center"></p>
 
             </div>
-            <div class="col-md-4 mt-4 mb-4 p-3">
+            <div class="col-md-6 mt-4 mb-4 p-3">
                 <p class="text-center"></p>
                 {% if events %}
                     {% for event in events %}
                     
-
-
-
-
-                        <div class="card mt-2 mb-2">
+                        <div class="card mt-2 mb-2 bg-dark shadow-lg" style="border-radius: 0;">
                             <div class="card-body">
-                                <p class="card-text"> {{ event.company.username }} </p>
-                                <a href="{% url 'event_details' event.id %}" class="card-text"> {{ event.title }} </a>
-                                <p class="card-text"> {{ event.date }} </p>
-                                <!-- {% for slot in event.available_slots.all %}
-                                <span class="badge badge-success">{{ slot.category.name }} {{ slot.number_of_seats }} </span>
+                                <h4  class="card-tittle stretched-link text-secondary"> {{ event.title }} </h4>
 
-                                {% endfor %} -->
+                                <p class="card-text text-white"> {{ event.company.username }} </p>
+                                <p class="card-text text-white text-muted"> {{ event.date }} </p>
+                                <a href="{% url 'event_details' event.id %}" class="card-text stretched-link text-white"></a>
+
                             </div>
                         </div>
                     {% endfor %}
                 {% endif %}
             </div>
-            <div class="col-md-4 mt-4 mb-4p-3">
+            <div class="col-md-3 mt-4 mb-4p-3">
                 <p class="text-center"></p>
             </div>
             <!-- Card -->

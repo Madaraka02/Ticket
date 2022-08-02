@@ -1,4 +1,5 @@
 {% extends 'base2.html' %}
+{% load static %}
 {% load crispy_forms_tags %}
 {% load mathfilters %}
 {% block title %}
@@ -15,9 +16,8 @@ Event | Details
             <div class="col-md-6 mt-4 mb-4 p-3">
                 <p class="text-center"></p>
                 {% if event %}
-                <div class="card mt-2 mb-2 bg-image shadow-lg"
-                style="background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/003.webp');">
-                    <div class="card-body text-white">
+                <div class="card mt-2 mb-2 shadow-lg">
+                    <div class="card-body">
 <!-- available_slots -->
                         <h5 class="card-tittle">{{event.title}}</h5>
                         <p class="card-text">By {{ event.company.username }} </p>
@@ -30,8 +30,9 @@ Event | Details
                         {% endfor %} -->
 
                     {% for ticket in tickets %}
-                                <a href="{% url 'ticket_details' ticket.id %}">
-                                    <span class="badge badge-success">{{ ticket.category }} <strong style="color: brown; font-size: small; font-weight: 800;">ksh: {{ ticket.price }} </strong>
+                                <a href="{% url 'ticket_details' ticket.id %}" >
+                                    
+                                    <span class="badge badge-success" id="tick">{{ ticket.category }} <strong style="color: brown; font-size: small; font-weight: 800;">ksh: {{ ticket.price }} </strong>
                                         {% for slot in ticket.event.available_slots.all %}
                                         {% if slot.category == ticket.category %}
 

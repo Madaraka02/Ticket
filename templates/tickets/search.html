@@ -8,21 +8,35 @@ Search
 <div class="container mt-2 mb-2">
     <div class="row mt-2 mb-2">
 {% if results %}
-<h1>Results for <b>{{ request.GET.q }}</b></h1>
-<br/><br/>
+<h4 class="text-center">Results for <b>{{ request.GET.q }}</b></h4>
+<div class="col-md-4"></div>
+<div class="col-md-4">
 
-{% for result in results %}
 
-{{result.title}}
-<br/>
+{% for event in results %}
 
+<div class="card mt-2 mb-2">
+    <div class="card-body">
+        <p class="card-text"> {{ event.company.username }} </p>
+        <a href="{% url 'event_details' event.id %}" class="card-text"> {{ event.title }} </a>
+        <p class="card-text"> {{ event.date }} </p>
+        <!-- {% for slot in event.available_slots.all %}
+        <span class="badge badge-success">{{ slot.category.name }} {{ slot.number_of_seats }} </span>
+
+        {% endfor %} -->
+    </div>
+</div>
 
 {% endfor %}
+</div>
 {% else %}
-No search results for this query
+<h4 class="text-center">No search results for this query</h4>
+
+
 {% endif %}
 
     </div>
+    <div class="col-md-4"></div>
 </div>
 
 {% endblock content %}
