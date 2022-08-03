@@ -30,6 +30,14 @@ urlpatterns=[
     path('host/ticket/<int:id>/delete/', admin_ticket_delete, name='admin_ticket_delete'),
     path('host/sales/<int:id>/delete/', host_sales_delete, name='host_sales_delete'),
 
+    path('access/token/', getAccessToken, name='get_mpesa_access_token'),
+    path('online/lipa/', lipa_na_mpesa_online, name='lipa_na_mpesa'),
 
+        # register, confirmation, validation and callback urls
+    path('c2b/register/', register_urls, name="register_mpesa_validation"),
+    path('c2b/confirmation/', confirmation, name="confirmation"),
+    path('c2b/validation/', validation, name="validation"),
+    path('c2b/callback/', call_back, name="call_back"),
 ]
 
+# register_urls
